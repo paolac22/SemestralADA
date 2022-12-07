@@ -1,8 +1,8 @@
 import random
 import string
 
-from palabras import palabras
-from ahorcado_diagramas import vidas_visual
+from palabras import *
+from ahorcado_diagramas import *
 
 def juego_ahorcado():
     def obtener_palabra_válida(palabras):
