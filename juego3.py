@@ -10,9 +10,9 @@ def Piedra_Papel_Tijera():
         print()
         print()
         
-        usuario=input("    -->--> Escribe una opción que deseas: 'P' para piedra, 'Pa' para papel, 'T' para tijera. <--<--\n    ").lower()
+        usuario=input("    -->--> Escribe una opción que deseas: 'Pi' para piedra, 'Pa' para papel, 'Ti' para tijera. <--<--\n    ").lower()
         print()
-        computadora=random.choice(['P', 'Pa', 'T'])
+        computadora=random.choice(['Pi', 'Pa', 'Ti'])
 
         if usuario==computadora:
             return print("   ¡Bueno! Empate    ")
@@ -28,9 +28,9 @@ def Piedra_Papel_Tijera():
         # Piedra gana a Tijera (pi > ti).
         # Tijera gana a Papel (ti > pa).
         # Papel gana a Piedra (pa > pi).
-        if ((usuario == 'P' and computadora == 'T')
-            or (usuario == 'T' and computadora == 'Pa')
-            or (usuario == 'Pa' and computadora == 'P')):
+        if ((usuario == 'Pi' and computadora == 'Ti')
+            or (usuario == 'Ti' and computadora == 'Pa')
+            or (usuario == 'Pa' and computadora == 'Pi')):
             return True
         else:
             return False
