@@ -31,19 +31,17 @@ while not salir:
     opcion=pedirNumero()
     
     from juego1 import *
-    from test import *
+    from juego2 import *
     from juego3 import * 
 
     if opcion == 1:
-       ahorcado()
-
+       juego_ahorcado()
     elif opcion == 2:
-        juego_2()
+        juegoEjecutar()
     elif opcion == 3:
        Piedra_Papel_Tijera()
     elif opcion == 4:
         salir = True
-
     else:
         print ("      Introduce un numero entre 1 al 4      ")
  

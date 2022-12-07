@@ -1,107 +1,122 @@
-import random
-import os
+import random 
 
-def inicializar_juego():
-    #Función que incializa los valores del juego
-    juego_en_curso = True
-    jugadores = [[input("Jugador 1: "),"X"], [input("Jugador 2: "),"O"]]
-    jugador_actual = random.randint(0, 1)
-    tablero = [["-","-","-"],["-","-","-"],["-","-","-"]]
-    return juego_en_curso, jugadores, jugador_actual, tablero
+print()
+print()
+print("=========================================================")
+print("     ¡Bienvenido(a) al juego de 3 en raya !     ")
+print("=========================================================")
+print()
+print()
 
-def actualizar_tablero(jugador, coordenada_fila, coordenada_columna, tablero_actual):
-    #Actualiza el tablero con la acción del jugador actual
-    tablero_actual[coordenada_fila - 1][coordenada_columna - 1] = jugador[1]
-    return tablero_actual
+tablero = ["  -  ","  -  ","  -  ",
+           "  -  ","  -  ","  -  ",
+           "  -  ","  -  ","  -  " ]
 
-def tablero_completo(tablero_actual):
-    #Comprueba si el tablero está completo, devuelve True o False
+jugador = "X"
+ganador = False
+juegoEjecutar = True
+
+#Impresion del Tablero
+def tablero_visual(tablero):
+    print()
+    print(" | " + tablero[0] + " | " + tablero[1] + " | " + tablero[2] + " | ")
+    print("-------------------------------")
+    print(" | " + tablero[3] + " | " + tablero[4] + " | " + tablero[5] + " | ")
+    print("-------------------------------")
+    print(" | " + tablero[6] + " | " + tablero[7] + " | " + tablero[8] + " | ")
+    print()
+
+#Entrada Jugador
+def inicio_jugador(tabler_visual):
+    num=int(input("Inserta movimiento del 1-9: "))
+    print()
+    if tablero[num-1] == "  -  ":
+        tablero[num-1] = jugador
+    else:
+        print("Ya está ocupado ese lugar")
+        print()
+
+#Comprobacion punto de control horizontal, vertical, diagonal
+def horizontal(tablero):
+    global ganador
+    if tablero[0] == tablero[1] == tablero[2] and tablero[0] != "  -  ":
+        ganador = tablero[0]
+        return True
+    elif tablero[3] == tablero[4] == tablero[5] and tablero[3] != "  -  ":
+        ganador = tablero[3]
+        return True
+    elif tablero[6] == tablero[7] == tablero[8] and tablero[6] != "  -  ":
+        ganador = tablero[6]
+        return True
+
+def vertical(tablero):
+    global ganador
+    if tablero[0] == tablero[3] == tablero[6] and tablero[0] != "  -  ":
+        ganador = tablero[0]
+        return True
+    elif tablero[1] == tablero[4] == tablero[7] and tablero[1] != "  -  ":
+        ganador = tablero[1]
+        return True
+    elif tablero[2] == tablero[5] == tablero[8] and tablero[2] != "  -  ":
+        ganador = tablero[3]
+        return True
+
+def diagonal(tablero):
+    global ganador
+    if tablero[0] == tablero[4] == tablero[8] and tablero[0] != "  -  ":
+        ganador = tablero[0]
+        return True
+    elif tablero[2] == tablero[4] == tablero[6] and tablero[4] != "  -  ":
+        ganador = tablero[2]
+        return True
+
+#Comprobación del ganador o perdedor
+def verificar_ganador(tablero):
+    global juegoEjecutar
+    if horizontal(tablero):
+        tablero_visual(tablero)
+        print (f"El ganador es {ganador}!")
+        juegoEjecutar = False
     
-    for linea in tablero_actual:
-        for celda in linea:
-            if celda == '-':
-                return False
-    return True
+    elif vertical(tablero):
+        tablero_visual(tablero)
+        print(f"El ganador es {ganador}!")
+        juegoEjecutar = False
 
-def comprobar_ganador(jugador, tablero_actual):
-    """Comprueba si ha ganado el jugador actual, devuelve True o False"""
-    #Comprobar por filas
-    for i in range(3):
-        ganador = True
-        for x in range(3):
-            if tablero_actual[i][x] != jugador[1]:
-                ganador = False
-                break
-        if ganador:
-            return ganador
+    elif diagonal(tablero):
+        tablero_visual(tablero)
+        print(f"El ganador es {ganador}!")
+        juegoEjecutar = False
 
-    #Comprobar por columnas
-    for i in range(3):
-        ganador = True
-        for x in range(3):
-            if tablero_actual[x][i] != jugador[1]:
-                ganador = False
-                break
-        if ganador:
-            return ganador
+def verificar_perdedor(tablero):
+    global juegoEjecutar
+    if "  -  " not in tablero:
+        tablero_visual(tablero)
+        print("¡Oh no, Empate!")
+        juegoEjecutar = False
 
-    #Comprobar por diagonales
-    ganador = True
-    for i in range(3):
-        if tablero_actual[i][i] != jugador[1]:
-            ganador = False
-            break
-    if ganador:
-        return ganador
+#Cambiar jugador
+def cambiar_jugador():
+    global jugador
+    if jugador == "X":
+        jugador = "O"
+    else:
+        jugador = "X"
 
-    ganador = True
-    for i in range(3):
-        if tablero_actual[i][3 - 1 - i] != jugador[1]:
-            ganador = False
-            break
-    if ganador:
-        return ganador
-    
-    return False
+#Maquina
+def computadora(tablero):
+    while jugador == "O":
+        posicion = random.randint(0, 8)
+        if tablero[posicion] == "  -  ":
+            tablero[posicion] = "O"
+            cambiar_jugador()
 
-juego_en_curso, jugadores, jugador_actual, tablero = inicializar_juego()
-
-while juego_en_curso:
-    if tablero_completo(tablero):
-        juego_en_curso = False
-        os.system("cls")
-        print("Fin del juego, no hay ganador")
-        break
-
-    os.system("cls")
-    #Nuevo turno
-    print("Turno de: " + jugadores[jugador_actual][0])
-
-    #Dibujar tablero
-    print("0 1 2 3")
-    coordenadas_vertical = 1
-    for linea in tablero:
-        print(coordenadas_vertical, linea[0], linea[1], linea[2])
-        coordenadas_vertical += 1
-
-    #Selección de casilla
-    coordenada_fila, coordenada_columna = list(map(int, input("Elige coordenadas: ")))
-    #Actuaizar tablero
-    tablero = actualizar_tablero(jugadores[jugador_actual], coordenada_fila, coordenada_columna, tablero)
-
-    #Comprobamos si ha ganado
-    if comprobar_ganador(jugadores[jugador_actual], tablero):
-        juego_en_curso = False
-
-        #Dibujar tablero
-        os.system("cls")
-        print("0 1 2 3")
-        coordenadas_vertical = 1
-        for linea in tablero:
-            print(coordenadas_vertical, linea[0], linea[1], linea[2])
-            coordenadas_vertical += 1
-
-        print("Ganador: ",jugadores[jugador_actual][0])
-
-    #Cambio de jugador
-    jugador_actual = 1 if jugador_actual == 0 else 0
+while juegoEjecutar:
+    tablero_visual(tablero)
+    inicio_jugador(tablero)
+    verificar_ganador(tablero)
+    verificar_perdedor(tablero)
+    cambiar_jugador()
+    computadora(tablero)
+    verificar_ganador(tablero)
+    verificar_perdedor(tablero)

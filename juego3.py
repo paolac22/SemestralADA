@@ -38,6 +38,17 @@ def Piedra_Papel_Tijera():
     print(jugar())
     print()
 
+
+
+
+
+
+
+
+
+
+
+
     """from menu import pedirNumero 
     def volver_a_jugar():
         print()
