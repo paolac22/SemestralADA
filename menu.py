@@ -1,7 +1,6 @@
 print()     
 print("================================================")
-print("       ¡Bienvenida a Jueglon!     ")
-print("   Sé Genial, Sé amante a los juegos  ")
+print("       ¡Bienvenida!     ")
 print("================================================")
 print()
 print()
@@ -24,22 +23,22 @@ while not salir:
     print()
     print ("     --->---> Elige tu juego favorito <---<---     ")
     print ("              1) Ahorcado")
-    print ("              2) 3 en raya")
-    print ("              3) Piedra, Papel o Tijera")
+    print ("              2) Piedra, Papel o Tijera ")
+    print ("              3) 3 en raya")
     print ("              4) Salir")
  
     opcion=pedirNumero()
     
-    from juego1 import *
-    from juego2 import *
-    from juego3 import * 
+    from juego1 import * 
+    from juego3 import *
+    from enraya import *
 
     if opcion == 1:
-       juego_ahorcado()
+        juego_ahorcado()
     elif opcion == 2:
-        juegoEjecutar()
+        Piedra_Papel_Tijera()
     elif opcion == 3:
-       Piedra_Papel_Tijera()
+        window=tk.Tk()
     elif opcion == 4:
         salir = True
     else:
